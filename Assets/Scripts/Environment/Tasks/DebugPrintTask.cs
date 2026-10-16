@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 
 namespace Environment.Tasks {
-    [CreateAssetMenu(fileName = "DebugPrint Task", menuName = "DebugPrint Task")]
-    public class DebugPrintTask : Task {
-        [SerializeField]
-        private string textToPrint = "Hi, I'm a test task!";
+    [CreateAssetMenu(fileName = "DebugPrint Task", menuName = "Tasks/DebugPrint Task")]
+    public class DebugPrintTask : Task<string, string> {
+        public override string Execute(Computer computer, string input) {
+            if(string.IsNullOrWhiteSpace(input)) {
+                Debug.LogWarning($"[Debug Print Task] require input to work!");
+                return null;
+            }
 
-        public override void Execute() {
-            Debug.Log(textToPrint);
+            Debug.Log(input);
+
+            return input;
         }
     }
 }
